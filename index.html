@@ -220,7 +220,7 @@
         //.data(facilityData) // use the facility CSV data
         .join('circle') // join that data to circle elements
         .attr('cx', d => { // feed the long/lat to the projection generator
-          d.position = projection([d.Longitude, d.Latitude]); // create a new data attribute
+          d.position = projection([d.LONGITUDE, d.LATITUDE]); // create a new data attribute
           return d.position[0]; // position the x
         })
         .attr('cy', d => {
@@ -298,7 +298,7 @@
         // change the display property for each circle
         facilities.style('display', d => {
           if (val === 'All facilities') return 'inline';
-          if (d.Industry_Type != val) return 'none';
+          if (d.Type != val) return 'none';
         });
 
         d3.select('#ui > a').html(val); // update the UI with current val
