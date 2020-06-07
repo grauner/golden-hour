@@ -209,15 +209,15 @@
       const color = d3.scaleOrdinal(d3.schemeSet3);
 
       // define radius generator
-      const radius = d3.scaleSqrt().domain([0, 1e6]).range([1, 9]);
+      //const radius = d3.scaleSqrt().domain([0, 1e6]).range([1, 9]);
       //console.log(radius(25)); // output is 1.04
 
       const facilities = svg.append('g') // append new g element
         .selectAll('circle') // select all the circles
-        .data(facilityData.sort(function (a, b) {
-          return b.Total - a.Total; // place the large ones on the bottom
-        }))
-        //.data(facilityData) // use the facility CSV data
+        //.data(facilityData.sort(function (a, b) {
+       //   return b.Total - a.Total; // place the large ones on the bottom
+        //}))
+        .data(facilityData) // use the facility CSV data
         .join('circle') // join that data to circle elements
         .attr('cx', d => { // feed the long/lat to the projection generator
           d.position = projection([d.LONGITUDE, d.LATITUDE]); // create a new data attribute
@@ -226,14 +226,14 @@
         .attr('cy', d => {
           return d.position[1]; // position the y
         })
-        .attr('r', d => {
+        //.attr('r', d => {
           //console.log(d); // access to the data here!!!
-          return radius(+d.Total);
-        })
+        //  return radius(+d.Total);
+        //})
         .style('fill', d => {
           return color(d.Type);
         })
-        //.attr('r', 2) // define the radius
+        .attr('r', 2) // define the radius
         .attr('class', 'facility'); // give each circle a class name
 
         
