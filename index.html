@@ -134,7 +134,7 @@
     // JavaScript
     // asynchronous calls to data files
     const statesJson = d3.json('data/us-states.json');
-    const facilityCSV = d3.csv('data/t.csv');
+    const facilityCSV = d3.csv('data/Hosp.csv');
 
     // use promise to call all data files, then send data to callback
     Promise.all([statesJson, facilityCSV])
@@ -152,11 +152,6 @@
       const statesData = data[0];
       const facilityData = data[1];
 
-      for (let n of facilityData) {
-        if (n.LATITUDE == null) {
-          console.log('yup')
-        }
-      }
 
       // select the HTML element that will hold our map
       const mapContainer = d3.select('#map')
@@ -221,11 +216,15 @@
         .join('circle') // join that data to circle elements
         .attr('cx', d => { // feed the long/lat to the projection generator
           d.position = projection([d.LONGITUDE, d.LATITUDE]); // create a new data attribute
-          console.log(d.position[0])
-          return d.position[0]; // position the x
+          if (d.COUNTRY == 'USA') {
+            return d.position[0];
+          }
+           // position the x
         })
         .attr('cy', d => {
-          return d.position[1]; // position the y
+          if (d.COUNTRY == 'USA') {
+            return d.position[1];
+          }
         })
         //.attr('r', d => {
           //console.log(d); // access to the data here!!!
@@ -254,7 +253,7 @@
         tooltip.classed('invisible', true) // hide the element 
       });
 
-      drawLegend(svg, width, height, radius)
+      // drawLegend(svg, width, height, radius)
 
     }
 
